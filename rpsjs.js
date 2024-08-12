@@ -14,6 +14,12 @@ const results = document.querySelector('#results');
 const yourChoice = document.createElement('p');
 const compChoice = document.createElement('p');
 const roundResult = document.createElement('div');
+const roundDisplay = document.createElement('p');
+const yourScoreDisplay = document.createElement ('p');
+const compScoreDisplay =  document.createElement ('p');
+const winnerMsg = document.createElement('p');
+const loserMsg = document.createElement('p');
+const tieMsg = document.createElement('p');
 
 function getComputerChoice () {
     computerChoice = Math.random() * 100;
@@ -26,7 +32,6 @@ function getComputerChoice () {
     }
     
 }
-//Take two inputs, Human and comptuer, and compare the two to add a point
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
         roundResult.textContent = "It's a draw!";
@@ -53,41 +58,40 @@ function playRound(humanChoice, computerChoice) {
         computerScore ++;
     }
 }
-let maxRounds = 1;
+
+let round = 1;
+let maxRounds = 3;
 function playGame (){
-    //Edited round number, in for line below, to be 1 round for testing
-    for (let round = 1; round <= maxRounds; round++) {
-        console.log('Round: ' + round);
-        getHumanChoice();
-        getComputerChoice();
-        console.log('The computer chose: ', computerChoice + '');
-        playRound(humanChoice,computerChoice);
-        console.log('You have: ' + humanScore + ' points');
-        console.log('Computer has: ' + computerScore + ' points');
-        if (round == maxRounds) {
-            if (humanScore > computerScore) {
-                console.log('Congrats, you won the game!');
-            } else if (humanScore < computerScore){
-                console.log('Sorry, you lost!');
-            } else {
-                console.log('Its a tie!')
-            }
+    playRound(humanChoice,computerChoice);
+    roundDisplay.textContent = `Round: ${round}`;
+    yourScoreDisplay.textContent = `Your score is: ${humanScore}`;
+    compScoreDisplay.textContent = `Computer Score is: ${computerScore}`;
+    results.appendChild(roundDisplay);
+    results.appendChild(yourScoreDisplay);
+    results.appendChild(compScoreDisplay);
+    if (round == maxRounds) {
+        if (humanScore > computerScore) {
+            winnerMsg.textContent = 'Congrats, you wont the game!'
+            results.appendChild(winnerMsg);
+        } else if (humanScore < computerScore){
+            loserMsg.textContent = 'Sorry, you lost!'
+            results.appendChild(loserMsg);
+        } else {
+            tieMsg.textContent = "It's a tie!"
+            results.appendChild(tieMsg);
         }
     }
 }
+
 buttons.forEach((button) =>{
     button.addEventListener('click', () => {
         humanChoice = button.id;
         getComputerChoice();
-
-/////edit below
         yourChoice.textContent = `You chose: ${humanChoice}\n`
         compChoice.textContent = `Computer chose: ${computerChoice}`;
         results.appendChild(yourChoice);
         results.appendChild(compChoice);
-
-
-//edit above
-        playRound(humanChoice, computerChoice);
+        playGame();
+        round++
     });
 });
