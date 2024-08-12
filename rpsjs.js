@@ -51,9 +51,10 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-
+let maxRounds = 1;
 function playGame (){
-    for (let round = 1; round <= 5; round++) {
+    //Edited round number, in for line below, to be 1 round for testing
+    for (let round = 1; round <= maxRounds; round++) {
         console.log('Round: ' + round);
         getHumanChoice();
         getComputerChoice();
@@ -61,7 +62,7 @@ function playGame (){
         playRound(humanChoice,computerChoice);
         console.log('You have: ' + humanScore + ' points');
         console.log('Computer has: ' + computerScore + ' points');
-        if (round == 5) {
+        if (round == maxRounds) {
             if (humanScore > computerScore) {
                 console.log('Congrats, you won the game!');
             } else if (humanScore < computerScore){
