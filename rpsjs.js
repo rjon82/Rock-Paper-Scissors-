@@ -1,8 +1,4 @@
 //Psuedocode: 
-//Define three string variables for each of the selections in the game as well as two variable that define the human and computer score
-//Create a function (getComputerChoice) that randomly selects a string value
-    //between rock, paper, or scissors
-//Create a function(getHumanChoice) that prompts the user for a choice of: rock, paper, or scissors 
 //Create a function (playRound) that has RPS logic and talleis up the score of each player
 let rock = 'rock';
 let paper = 'paper';
@@ -12,6 +8,12 @@ let humanScore = 0;
 let humanChoice ;
 let computerChoice ;
 
+
+const buttons = document.querySelectorAll('button');
+const results = document.querySelector('#results');
+const yourChoice = document.createElement('p');
+const compChoice = document.createElement('p');
+const roundResult = document.createElement('div');
 
 function getComputerChoice () {
     computerChoice = Math.random() * 100;
@@ -24,33 +26,33 @@ function getComputerChoice () {
     }
     
 }
-
-function getHumanChoice () {
-    humanChoice = prompt('Please choose rock, paper, or scissors').toLowerCase();
-    console.log('You chose: ', humanChoice);
-    return humanChoice;
-}
-
-
 //Take two inputs, Human and comptuer, and compare the two to add a point
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-        console.log ('Its a draw');
+        roundResult.textContent = "It's a draw!";
+        results.appendChild(roundResult);
+
     } else if (humanChoice  == rock && computerChoice == scissors) {
-        console.log('You win, rock beats scissors!');
+        roundResult.textContent = "You win, rock beats scissors!";
+        results.appendChild(roundResult);
         return humanScore ++;
+
     } else if (humanChoice == paper && computerChoice == rock) {
-        console.log('You win, paper beats scissors!')
+        roundResult.textContent = "You win, paper beats rock!";
+        results.appendChild(roundResult);
         return humanScore ++;
+
     } else if (humanChoice == scissors && computerChoice == paper) {
-        console.log ('You win, scissors beats paper!');
+        roundResult.textContent = "You win, scissors beats paper!";
+        results.appendChild(roundResult);
         return humanScore ++;
+
     } else {
-        console.log ('Computer wins, ' + computerChoice + ' beats ' + humanChoice)
+        roundResult.textContent = `Computer wins, ${computerChoice} beats ${humanChoice}`;
+        results.appendChild(roundResult);
         computerScore ++;
     }
 }
-
 let maxRounds = 1;
 function playGame (){
     //Edited round number, in for line below, to be 1 round for testing
@@ -73,5 +75,19 @@ function playGame (){
         }
     }
 }
+buttons.forEach((button) =>{
+    button.addEventListener('click', () => {
+        humanChoice = button.id;
+        getComputerChoice();
 
-playGame();
+/////edit below
+        yourChoice.textContent = `You chose: ${humanChoice}\n`
+        compChoice.textContent = `Computer chose: ${computerChoice}`;
+        results.appendChild(yourChoice);
+        results.appendChild(compChoice);
+
+
+//edit above
+        playRound(humanChoice, computerChoice);
+    });
+});
