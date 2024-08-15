@@ -8,7 +8,6 @@ let humanScore = 0;
 let humanChoice ;
 let computerChoice ;
 
-
 const buttons = document.querySelectorAll('button');
 const results = document.querySelector('#results');
 const yourChoice = document.createElement('p');
@@ -60,7 +59,7 @@ function playRound(humanChoice, computerChoice) {
 }
 
 let round = 1;
-let maxRounds = 3;
+let maxScore = 5;
 function playGame (){
     playRound(humanChoice,computerChoice);
     roundDisplay.textContent = `Round: ${round}`;
@@ -69,11 +68,12 @@ function playGame (){
     results.appendChild(roundDisplay);
     results.appendChild(yourScoreDisplay);
     results.appendChild(compScoreDisplay);
-    if (round == maxRounds) {
-        if (humanScore > computerScore) {
-            winnerMsg.textContent = 'Congrats, you wont the game!'
+    console.log(humanScore, computerScore);
+    if ((computerScore == maxScore) || (humanScore == maxScore)) {
+        if (humanScore == maxScore) {
+            winnerMsg.textContent = 'Congrats, you won the game!'
             results.appendChild(winnerMsg);
-        } else if (humanScore < computerScore){
+        } else if (computerScore == maxScore){
             loserMsg.textContent = 'Sorry, you lost!'
             results.appendChild(loserMsg);
         } else {
@@ -95,3 +95,4 @@ buttons.forEach((button) =>{
         round++
     });
 });
+
